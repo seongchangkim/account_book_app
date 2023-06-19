@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Form(
             key: _profileFormKey,
             child: Container(
-              margin: const EdgeInsets.only(bottom: 30),
+              margin: const EdgeInsets.fromLTRB(30,30,30,0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

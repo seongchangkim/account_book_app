@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage>
   Future<bool> _onFirst(String userId) async {
     var result = await getExpenseListByDate(
         userId, DateFormat('yyyy-MM-dd').format(date), null);
-    print("result : ${result}");
     for (int i = 0; i < result["content"].length; i++) {
       if (i == (result["content"].length - 1)) {
         lastExpenseId = result["content"][i]["id"];
@@ -50,7 +49,6 @@ class _HomePageState extends State<HomePage>
   Future<void> _onLoad() async {
     var result = await getExpenseListByDate(userId,
         DateFormat('yyyy-MM-dd').format(date), lastExpenseId.toString());
-    // print("result : ${result}");
     for (int i = 0; i < result["content"].length; i++) {
       if (i == (result["content"].length - 1)) {
         lastExpenseId = result["content"][i]["id"];
@@ -58,7 +56,6 @@ class _HomePageState extends State<HomePage>
       expenseList.add(result["content"][i]);
     }
 
-    // setState(() {});
     _refreshController.loadComplete();
   }
 
@@ -80,7 +77,6 @@ class _HomePageState extends State<HomePage>
     var result = await getExpenseListByDate(
         userId, DateFormat('yyyy-MM-dd').format(date), null);
     setState(() {
-      print("result : ${result}");
       for (int i = 0; i < result["content"].length; i++) {
         if (i == (result["content"].length - 1)) {
           lastExpenseId = result["content"][i]["id"];
@@ -118,7 +114,7 @@ class _HomePageState extends State<HomePage>
             },
             child: Text(
               "${date.year}-${date.month < 10 ? "0${date.month}" : date.month}-${date.day < 10 ? "0${date.day}" : date.day}",
-              style: const TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black, fontSize: 18),
             ),
           ),
           backgroundColor: Colors.white12,
@@ -127,6 +123,8 @@ class _HomePageState extends State<HomePage>
           child: SingleChildScrollView(
               child: Container(
                   margin: const EdgeInsets.only(top: 10),
+                  decoration: const BoxDecoration(
+                      border: Border(top: BorderSide(color: Colors.black45))),
                   width: width,
                   height: heiget,
                   child: FutureBuilder(
@@ -175,74 +173,135 @@ class _HomePageState extends State<HomePage>
                                 );
                               }),
                             ),
-                            child: ListView.builder(
-                                itemCount: expenseList.length,
-                                itemBuilder: (context, index) {
-                                  final expense = expenseList[index];
+                            child: expenseList.isNotEmpty
+                                ? ListView.builder(
+                                    itemCount: expenseList.length,
+                                    itemBuilder: (context, index) {
+                                      final expense = expenseList[index];
 
-                                  return GestureDetector(
-                                      onTap: () async {
-                                        bool isRefresh = await Navigator.pushNamed(
-                                            context, "/expenseEdit",
-                                            arguments: {
-                                              "expenseId": expense["id"]
-                                            }) as bool;
+                                      return GestureDetector(
+                                          onTap: () async {
+                                            bool isRefresh =
+                                                await Navigator.pushNamed(
+                                                    context, "/expenseEdit",
+                                                    arguments: {
+                                                  "expenseId": expense["id"]
+                                                }) as bool;
 
-                                        if (isRefresh) {
-                                          _onRefresh();
-                                        }
-                                      },
-                                      child: Container(
-                                        margin: EdgeInsets.fromLTRB(
-                                            width * 0.05, 10, width * 0.05, 0),
-                                        width: width,
-                                        height: heiget * 0.05,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 1,
-                                              child: Container(
-                                                height: heiget * 0.05,
-                                                child: Text(
-                                                  getExpenseCategoryKey(
-                                                      expense["category"]),
+                                            if (isRefresh) {
+                                              _onRefresh();
+                                            }
+                                          },
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                                border: Border(
+                                                    bottom: BorderSide(
+                                                        color:
+                                                            Colors.black45))),
+                                            width: width,
+                                            height: heiget * 0.07,
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                        getExpenseCategoryKey(
+                                                            expense[
+                                                                "category"]),
+                                                        style: const TextStyle(
+                                                            fontSize: 12,
+                                                            color: Colors
+                                                                .black38)),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 3,
-                                              child: Container(
-                                                height: heiget * 0.05,
-                                                child: Text(
-                                                  expense["content"],
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                                Expanded(
+                                                  flex: 5,
+                                                  child: Container(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                      expense["content"],
+                                                      style: const TextStyle(
+                                                          fontSize: 13,
+                                                          color:
+                                                              Colors.black54),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                Expanded(
+                                                  flex: 3,
+                                                  child: Container(
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      child: Container(
+                                                        margin: const EdgeInsets
+                                                            .only(right: 10),
+                                                        child: Text(
+                                                            expense["status"] ==
+                                                                    "INCOME"
+                                                                ? "₩${expense["expensePrice"]}"
+                                                                : "-₩${expense["expensePrice"]}",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 13,
+                                                                color: expense[
+                                                                            "status"] ==
+                                                                        "INCOME"
+                                                                    ? Colors
+                                                                        .redAccent
+                                                                    : Colors
+                                                                        .blueAccent)),
+                                                      )),
+                                                )
+                                              ],
                                             ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Container(
-                                                height: heiget * 0.05,
-                                                child: Text(expense["status"] ==
-                                                        "INCOME"
-                                                    ? "${expense["expensePrice"]}"
-                                                    : "-${expense["expensePrice"]}"),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ));
-                                }));
+                                          ));
+                                    })
+                                : Container(
+                                    height: heiget,
+                                    child: const Center(
+                                      child: Text(
+                                        "데이터가 없습니다.",
+                                      )  
+                                    )));
                       } else {
-                        return const Center(
-                          child: Text("데이터가 없습니다"),
-                        );
+                        return Container(
+                            height: heiget,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const CircularProgressIndicator(),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 30),
+                                    child: const Text(
+                                      "로딩 중입니다....",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ));
                       }
                     }),
                   )))),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, "/expenseAdd"),
+        onPressed: () async {
+          bool isRefresh =
+              await Navigator.pushNamed(context, "/expenseAdd") as bool;
+
+          if (isRefresh) {
+            _onRefresh();
+          }
+        },
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

@@ -9,7 +9,6 @@ import 'package:account_book_app/widget/user/user_input_btn.dart';
 import 'package:account_book_app/widget/user/user_input_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_user.dart';
 import 'package:http/http.dart' as http;
@@ -38,15 +37,15 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
           child: SingleChildScrollView(
               child: Container(
-        width: _width,
-        height: _height,
-        margin: EdgeInsets.symmetric(horizontal: _width * 0.05),
+                width: _width,
+                height: _height,
+                margin: EdgeInsets.symmetric(horizontal: _width * 0.08),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "로그인",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
+              "LOGO",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
             ),
             Form(
                 //
@@ -64,21 +63,32 @@ class _LoginPageState extends State<LoginPage> {
                       inputType: "password",
                       isMoveNextCursor: false,
                     ),
-                    Container(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          const Text(
+                            "아직 회원이 아닙니까? ",
+                            style: TextStyle(fontSize: 13),
+                          ),
                           GestureDetector(
-                              onTap: () =>
-                                  Navigator.pushNamed(context, "/signUp"),
-                              child: const Text("회원가입"))
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/signUp'),
+                            child: const Text("회원가입",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueAccent,
+                                    fontSize: 13)),
+                          )
                         ],
                       ),
                     ),
                     GestureDetector(
                         onTap: () async {
-                          //
+                          // 로그인 폼 유효성 검사 통과하면
                           if (_loginForm.currentState!.validate()) {
+                            // 로그인
                             var res = await login(
                               emailController.text,
                               passwordController.text,
@@ -87,14 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                             var result = json.decode(res);
 
                             if (result["errorMessage"] == null) {
-                              await checkAuth(result["token"]).then((isAuth) {
-                                if (isAuth) {
-                                  menuController.setAppMenuPage(0);
-                                  // 홈화면으로 이동
-                                  Navigator.pushNamedAndRemoveUntil(
-                                      context, "/appMenu", (route) => false);
-                                }
-                              });
+                              await successLoginRedirectPage(result["token"]);
                             } else {
                               showDialog(
                                   context: context,
@@ -109,102 +112,110 @@ class _LoginPageState extends State<LoginPage> {
                           btnText: "로그인",
                         )),
                     GestureDetector(
-                      onTap: () async {
-                        OAuthToken oauthToken = await isKakaoTalkInstalled()
-                            ? await UserApi.instance.loginWithKakaoTalk()
-                            : await UserApi.instance.loginWithKakaoAccount();
+                        onTap: () async {
+                          OAuthToken oauthToken = await isKakaoTalkInstalled()
+                              ? await UserApi.instance.loginWithKakaoTalk()
+                              : await UserApi.instance.loginWithKakaoAccount();
 
-                        try {
-                          // print('카카오톡으로 로그인 성공');
+                          try {
+                            var token = oauthToken.toJson();
 
-                          var token = oauthToken.toJson();
+                            final url =
+                                Uri.https('kapi.kakao.com', '/v2/user/me');
 
-                          print("accessToken : ${token["access_token"]}");
-                          final url =
-                              Uri.https('kapi.kakao.com', '/v2/user/me');
+                            final response = await http.get(
+                              url,
+                              headers: {
+                                HttpHeaders.authorizationHeader:
+                                    'Bearer ${oauthToken.accessToken}'
+                              },
+                            );
 
-                          final response = await http.get(
-                            url,
-                            headers: {
-                              HttpHeaders.authorizationHeader:
-                                  'Bearer ${oauthToken.accessToken}'
-                            },
-                          );
+                            final profileInfo = json.decode(response.body);
 
-                          final profileInfo = json.decode(response.body);
+                            var isExistRes = await isExistSocialUser(
+                                profileInfo["kakao_account"]["email"],
+                                profileInfo["kakao_account"]["profile"]
+                                    ["nickname"],
+                                "KAKAO");
 
-                          var isExistRes = await isExistSocialUser(
-                              profileInfo["kakao_account"]["email"],
-                              profileInfo["kakao_account"]["profile"]
-                                  ["nickname"],
-                              "KAKAO");
+                            if (isExistRes) {
+                              await kakaoLogin(token["access_token"],
+                                      userController.userId)
+                                  .then((value) async =>
+                                      successLoginRedirectPage(
+                                          token["access_token"]));
+                              return;
+                            }
 
-                          if (isExistRes) {
-                            await kakaoLogin(token["access_token"],
-                                    userController.userId)
-                                .then((value) async =>
-                                    await checkAuth(token["access_token"])
-                                        .then((isAuth) {
-                                      print("isAuth : $isAuth");
+                            bool isSucess = await Navigator.pushNamed(
+                                context, "/socialLogin",
+                                arguments: {
+                                  'email': profileInfo["kakao_account"]
+                                      ["email"],
+                                  'name': profileInfo["kakao_account"]
+                                      ["profile"]["nickname"]
+                                }) as bool;
 
-                                      if (isAuth) {
-                                        menuController.setAppMenuPage(0);
+                            print("token : ${token["access_token"]}");
+                            if (isSucess) {
+                              await kakaoLogin(token["access_token"],
+                                      userController.userId)
+                                  .then((value) async =>
+                                      successLoginRedirectPage(
+                                          token["access_token"]));
+                            }
+                          } catch (error) {
+                            print('카카오톡으로 로그인 실패 $error');
 
-                                        // 홈화면으로 이동
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            "/appMenu",
-                                            (route) => false);
-                                      }
-                                    }));
-
-                            return;
+                            // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
+                            // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
+                            if (error is PlatformException &&
+                                error.code == 'CANCELED') {
+                              return;
+                            }
                           }
-
-                          bool isSucess = await Navigator.pushNamed(
-                              context, "/socialLogin",
-                              arguments: {
-                                'email': profileInfo["kakao_account"]["email"],
-                                'name': profileInfo["kakao_account"]["profile"]
-                                    ["nickname"]
-                              }) as bool;
-
-                          print("token : ${token["access_token"]}");
-                          if (isSucess) {
-                            await kakaoLogin(
-                                token["access_token"], userController.userId)
-                                  .then((value) async {
-                                    await checkAuth(token["access_token"])
-                                        .then((isAuth) {
-                                      // print("isAuth : $isAuth");
-                                      if (isAuth) {
-                                        menuController.setAppMenuPage(0);
-
-                                        // 홈화면으로 이동
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context, "/appMenu", (route) => false);
-                                      }
-                                    });
-                                  });
-                          }
-                        } catch (error) {
-                          print('카카오톡으로 로그인 실패 $error');
-
-                          // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
-                          // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
-                          if (error is PlatformException &&
-                              error.code == 'CANCELED') {
-                            return;
-                          }
-                        }
-                      },
-                      child: Image.asset("assets/kakao_login_medium_wide.png"),
-                    )
+                        },
+                        child: Container(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: _width * 0.02),
+                          height: _height * 0.07,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(30)),
+                              border: Border.all(color: Colors.black12)),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/kakao-logo-yellow.png",
+                                    width: 40, height: 40),
+                                const Text(
+                                  " 카카오 로그인",
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ]),
+                        ))
                   ],
                 ))
           ],
         ),
       ))),
     );
+  }
+
+  // 로그인 및 소셜 로그인 공통 처리 메소드(토큰 유효성 검사 및 홈 화면으로 리다이렉트)
+  Future<void> successLoginRedirectPage(String token) async {
+    await checkAuth(token).then((isAuth) {
+      // print("isAuth : $isAuth");
+      if (isAuth) {
+        menuController.setAppMenuPage(0);
+
+        // 홈화면으로 이동
+        Navigator.pushNamedAndRemoveUntil(
+            context, "/appMenu", (route) => false);
+      }
+    });
   }
 }

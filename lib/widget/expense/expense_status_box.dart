@@ -29,7 +29,6 @@ class _ExpenseStatusBoxState extends State<ExpenseStatusBox> {
       child: GestureDetector(
         onTap: () {
           widget.function();
-          // print("selectedStatus child : ${widget.currentSelectedStatus}");
         },
         child: Container(
           margin: widget.margin,
@@ -46,7 +45,8 @@ class _ExpenseStatusBoxState extends State<ExpenseStatusBox> {
               style: TextStyle(
                   color: widget.currentSelectedStatus == widget.selectedStatus
                       ? widget.focusColor
-                      : Colors.black12),
+                      : Colors.black12,
+                  fontSize: 11),
             ),
           ),
         ),

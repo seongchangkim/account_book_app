@@ -5,8 +5,9 @@ import 'package:account_book_app/appbar/text_center_appbar.dart';
 import 'package:account_book_app/dialog/confirm_dialog.dart';
 import 'package:account_book_app/dialog/expense/expense_category_select_dialog.dart';
 import 'package:account_book_app/store/user_store.dart';
+import 'package:account_book_app/widget/expense/expense_input_btn.dart';
+import 'package:account_book_app/widget/expense/expense_input_form.dart';
 import 'package:account_book_app/widget/expense/expense_status_box.dart';
-import 'package:account_book_app/widget/user/user_input_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -35,11 +36,6 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
   String selectedStatus = "EXPENSE";
   // 선택한 분류
   String selectedCategory = "";
-  // 비용 입력 형식 지정
-  final _expenseFormatter = MaskTextInputFormatter(
-      mask: "############",
-      filter: {"#": RegExp(r'[0-9]')},
-      type: MaskAutoCompletionType.lazy);
 
   // 회원 상태 저장소
   final _userController = Get.put(UserStore());
@@ -104,7 +100,6 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                               text: "수입",
                               function: () => setState(() {
                                 selectedStatus = "INCOME";
-                                // print("selectedStatus : ${selectedStatus}");
                               }),
                             ),
                             ExpenseStatusBox(
@@ -115,7 +110,6 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                               text: "지출",
                               function: () => setState(() {
                                 selectedStatus = "EXPENSE";
-                                // print("selectedStatus : ${selectedStatus}");
                               }),
                             )
                           ],
@@ -131,7 +125,7 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                   child: Text(
                                     "날짜",
                                     style: TextStyle(
-                                        fontSize: 14, color: Colors.black38),
+                                        fontSize: 13, color: Colors.black38),
                                   ),
                                 )),
                             Expanded(
@@ -153,108 +147,15 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                     print(selectedDate.runtimeType);
                                   },
                                   child: Text(
-                                    "${date.year}-${date.month < 10 ? "0${date.month}" : date.month}-${date.day < 10 ? "0${date.day}" : date.day}",
-                                    style: const TextStyle(fontSize: 14),
+                                    " ${date.year}-${date.month < 10 ? "0${date.month}" : date.month}-${date.day < 10 ? "0${date.day}" : date.day}",
+                                    style: const TextStyle(fontSize: 13),
                                   ),
                                 ))
                           ],
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          children: [
-                            const Expanded(
-                                flex: 1,
-                                child: Center(
-                                    child: Text(
-                                  "금액",
-                                  style: TextStyle(
-                                      fontSize: 14, color: Colors.black38),
-                                ))),
-                            Expanded(
-                                flex: 3,
-                                child: Container(
-                                  height: 25,
-                                  child: TextFormField(
-                                      controller: _expenseController,
-                                      inputFormatters: [_expenseFormatter],
-                                      decoration: InputDecoration(
-                                          labelText: "",
-                                          border: InputBorder.none,
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide: const BorderSide(
-                                                color: Colors.blueAccent,
-                                                width: 1.0),
-                                          ),
-                                          isCollapsed: true,
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 5),
-                                          isDense: true),
-                                      validator: (text) {
-                                        String? emptyValidatorStr =
-                                            isInputTextEmpty(text, "금액");
-
-                                        if (emptyValidatorStr != null) {
-                                          return emptyValidatorStr;
-                                        }
-                                      }),
-                                ))
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Text(
-                                    "내용",
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.black38),
-                                  ),
-                                )),
-                            Expanded(
-                                flex: 3,
-                                child: Container(
-                                  height: 25,
-                                  child: TextFormField(
-                                      controller: _contentController,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      decoration: InputDecoration(
-                                          labelText: "",
-                                          border: InputBorder.none,
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide: const BorderSide(
-                                                color: Colors.blueAccent,
-                                                width: 1.0),
-                                          ),
-                                          isCollapsed: true,
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 5),
-                                          isDense: true),
-                                      validator: (text) {
-                                        String? emptyValidatorStr =
-                                            isInputTextEmpty(text, "내용");
-
-                                        if (emptyValidatorStr != null) {
-                                          return emptyValidatorStr;
-                                        }
-                                      }),
-                                ))
-                          ],
-                        ),
-                      ),
+                      ExpenseInputForm(labelText: "금액", textController: _expenseController),
+                      ExpenseInputForm(labelText: "내용", textController: _contentController),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         child: Row(
@@ -265,7 +166,7 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                   child: Text(
                                     "분류",
                                     style: TextStyle(
-                                        fontSize: 14, color: Colors.black38),
+                                        fontSize: 13, color: Colors.black38),
                                   ),
                                 )),
                             Expanded(
@@ -279,7 +180,6 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                               currentSelectedCategory:
                                                   selectedCategory,
                                               function: (String value) {
-                                                // print("aaa value : $value");
                                                 setState(() {
                                                   selectedCategory = value;
                                                 });
@@ -287,8 +187,8 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                         });
                                   },
                                   child: Text(
-                                    getExpenseCategoryKey(selectedCategory),
-                                    style: const TextStyle(fontSize: 14),
+                                    " ${getExpenseCategoryKey(selectedCategory)}",
+                                    style: const TextStyle(fontSize: 13),
                                   ),
                                 ))
                           ],
@@ -309,24 +209,25 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                   selectedCategory);
 
                               if (res["success"]) {
-                                Navigator.pop(context);
+                                Navigator.pop(context, true);
                               }
                             }
                           },
-                          child: Container(
-                            height: 50,
-                            margin: const EdgeInsets.only(top: 20),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                                color: Colors.blueAccent),
-                            child: const Center(
-                              child: Text(
-                                "추가",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
+                          child: const ExpenseInputBtn(color: Colors.blueAccent, btnText: "추가", margin: EdgeInsets.only(top: 20))
+                          // Container(
+                          //   height: 50,
+                          //   margin: const EdgeInsets.only(top: 20),
+                          //   decoration: const BoxDecoration(
+                          //       borderRadius:
+                          //           BorderRadius.all(Radius.circular(10)),
+                          //       color: Colors.blueAccent),
+                          //   child: const Center(
+                          //     child: Text(
+                          //       "추가",
+                          //       style: TextStyle(color: Colors.white),
+                          //     ),
+                          //   ),
+                          // ),
                         )
                       else if (widget.isEditing)
                         Row(
@@ -376,20 +277,21 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                       }
                                     }
                                   },
-                                  child: Container(
-                                    height: 50,
-                                    margin: const EdgeInsets.only(top: 20, right: 5),
-                                    decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                        color: Colors.blueAccent),
-                                    child: const Center(
-                                      child: Text(
-                                        "수정",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
+                                  child: const ExpenseInputBtn(color: Colors.blueAccent, btnText: "수정", margin: EdgeInsets.only(top: 20, right: 5),)
+                                  // Container(
+                                  //   height: 50,
+                                  //   margin: const EdgeInsets.only(top: 20, right: 5),
+                                  //   decoration: const BoxDecoration(
+                                  //       borderRadius: BorderRadius.all(
+                                  //           Radius.circular(10)),
+                                  //       color: Colors.blueAccent),
+                                  //   child: const Center(
+                                  //     child: Text(
+                                  //       "수정",
+                                  //       style: TextStyle(color: Colors.white),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 )),
                             Expanded(
                                 flex: 1,
@@ -416,20 +318,21 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                       }
                                     }
                                   },
-                                  child: Container(
-                                    height: 50,
-                                    margin: const EdgeInsets.only(top: 20, left: 5),
-                                    decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                        color: Colors.redAccent),
-                                    child: const Center(
-                                      child: Text(
-                                        "삭제",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                  ),
+                                  child: const ExpenseInputBtn(color: Colors.redAccent, btnText: "삭제", margin: EdgeInsets.only(top: 20, left: 5))
+                                  // Container(
+                                  //   height: 50,
+                                  //   margin: const EdgeInsets.only(top: 20, left: 5),
+                                  //   decoration: const BoxDecoration(
+                                  //       borderRadius: BorderRadius.all(
+                                  //           Radius.circular(10)),
+                                  //       color: Colors.redAccent),
+                                  //   child: const Center(
+                                  //     child: Text(
+                                  //       "삭제",
+                                  //       style: TextStyle(color: Colors.white),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 )),
                           ],
                         )

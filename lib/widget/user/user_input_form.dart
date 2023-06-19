@@ -26,54 +26,69 @@ class _UserInputFormState extends State<UserInputForm> {
       filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.lazy);
 
-  // late FocusNode myFocusNode;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   myFocusNode = FocusNode();
-  // }
-
-  // @override
-  // void dispose() {
-  //   // Clean up the focus node when the Form is disposed.
-  //   myFocusNode.dispose();
-
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: TextFormField(
-        readOnly: widget.isWriteInputForm ? true : false,
-        inputFormatters: widget.inputType == "tel" ? [telFormatter] : [],
-        controller: widget.controller,
-        textInputAction: widget.isMoveNextCursor
-            ? TextInputAction.next
-            : TextInputAction.done,
-        decoration: InputDecoration(labelText: widget.labelText),
-        obscureText: widget.inputType == "password" ? true : false,
-        validator: (text) {
-          String? emptyValidatorStr = isInputTextEmpty(text, widget.labelText);
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            child: Text(
+              widget.labelText,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13
+              )
+            ),
+          ),
+          TextFormField(
+            readOnly: widget.isWriteInputForm ? true : false,
+            inputFormatters: widget.inputType == "tel" ? [telFormatter] : [],
+            controller: widget.controller,
+            textInputAction: widget.isMoveNextCursor
+                ? TextInputAction.next
+                : TextInputAction.done,
+            decoration: const InputDecoration(
+              contentPadding: EdgeInsets.all(8.0),
+              isCollapsed: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                borderSide: BorderSide(
+                  color: Colors.black26,
+                  width: 1.0
+                )
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                borderSide: BorderSide(
+                  color: Colors.redAccent,
+                  width: 1.0,
+                ),
+              ),
+            ),
+            obscureText: widget.inputType == "password" ? true : false,
+            validator: (text) {
+              String? emptyValidatorStr = isInputTextEmpty(text, widget.labelText);
 
-          if (emptyValidatorStr != null) {
-            return emptyValidatorStr;
-          }
+              if (emptyValidatorStr != null) {
+                return emptyValidatorStr;
+              }
 
-          if (widget.inputType == "email") {
-            return !text!.trim().contains("@") ? "이메일 형식을 맞게 입력하세요!" : null;
-          } else if (widget.inputType == "password") {
-            return text!.length < 8 ? "비밀번호를 8자 이상 입력하세요." : null;
-          } else if (widget.inputType == "tel") {
-            String pattern = '01[0|1|6|8|9]{1}-[0-9]{3,4}-[0-9]{4}';
-            RegExp regExp = RegExp(pattern);
+              if (widget.inputType == "email") {
+                return !text!.trim().contains("@") ? "이메일 형식을 맞게 입력하세요!" : null;
+              } else if (widget.inputType == "password") {
+                return text!.length < 8 ? "비밀번호를 8자 이상 입력하세요." : null;
+              } else if (widget.inputType == "tel") {
+                String pattern = '01[0|1|6|8|9]{1}-[0-9]{3,4}-[0-9]{4}';
+                RegExp regExp = RegExp(pattern);
 
-            return !regExp.hasMatch(text!) ? "전화번호 형식에 맞게 입력하세요." : null;
-          }
-        },
+                return !regExp.hasMatch(text!) ? "전화번호 형식에 맞게 입력하세요." : null;
+              }
+            },
+          ),
+        ],
       ),
     );
   }

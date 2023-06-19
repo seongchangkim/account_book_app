@@ -14,7 +14,7 @@ class ErrorDialog extends StatelessWidget {
     return Dialog(
         alignment: Alignment.center,
         child: Container(
-          height: height * 0.2,
+          height: height * 0.29,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(30))
           ),
@@ -28,7 +28,7 @@ class ErrorDialog extends StatelessWidget {
                 child: Text(
                   "오류",
                   style:
-                      const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ) 
             ),
@@ -38,7 +38,7 @@ class ErrorDialog extends StatelessWidget {
                 child: Text(
                   content,
                   style:
-                      const TextStyle(fontSize: 16),
+                      const TextStyle(fontSize: 14),
                 ),
               )
             ),
@@ -48,7 +48,7 @@ class ErrorDialog extends StatelessWidget {
                 width: width,
                 padding: const EdgeInsets.only(top: 10),
                 decoration: const BoxDecoration(border: Border(top: BorderSide(width: 1, color: Colors.black38))),
-                height: 30,
+                height: 40,
                 child: const Center(
                   child: Text(
                     "확인",
@@ -56,7 +56,6 @@ class ErrorDialog extends StatelessWidget {
                         TextStyle(fontSize: 15),
                   ),
                 )
-                
               ),
             )
             

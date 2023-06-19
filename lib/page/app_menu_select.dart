@@ -43,6 +43,8 @@ class _AppMenuSelectState extends State<AppMenuSelect> {
         )),
       ),
       bottomNavigationBar: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
           items: _bottomMenuBarItemList,
           currentIndex: menuIndex,
           selectedItemColor: Colors.blueAccent,

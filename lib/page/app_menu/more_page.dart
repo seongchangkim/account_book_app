@@ -46,7 +46,7 @@ class _MorePageState extends State<MorePage>
                     children: [
                       Container(
                         width: _width,
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                         child: const Text(
                           "게정 관리",
                           style: TextStyle(

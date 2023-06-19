@@ -20,7 +20,7 @@ class ConfirmDialog extends StatelessWidget {
     return Dialog(
         alignment: Alignment.center,
         child: Container(
-          height: height * 0.25,
+          height: height * 0.29,
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(30))),
           child: Column(
@@ -34,7 +34,7 @@ class ConfirmDialog extends StatelessWidget {
                     child: Text(
                       title,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20),
+                          fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   )),
               Container(
@@ -42,21 +42,21 @@ class ConfirmDialog extends StatelessWidget {
                   child: Center(
                     child: Text(
                       content,
-                      style: const TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   )),
               GestureDetector(
                 onTap: () {
-                  print("click");
+                  // print("click");
                   func();
                 },
                 child: Container(
                     width: width,
+                    height: 40,
                     padding: const EdgeInsets.only(top: 10),
                     decoration: const BoxDecoration(
                         border: Border(
                             top: BorderSide(width: 1, color: Colors.black38))),
-                    height: 30,
                     child: const Center(
                       child: Text(
                         "확인",

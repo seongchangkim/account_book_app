@@ -17,8 +17,11 @@ class _UserInputBtnState extends State<UserInputBtn> {
     return Container(
         width: width,
         margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        decoration: const BoxDecoration(color: Colors.blue),
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        decoration: const BoxDecoration(
+          color: Colors.lime,
+          borderRadius: BorderRadius.all(Radius.circular(30))
+        ),
         child: Center(
           child: Text(widget.btnText, style: const TextStyle(color: Colors.white),),
         )

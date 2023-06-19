@@ -55,13 +55,13 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Container(
                 width: _width,
                 height: _height,
-                margin: EdgeInsets.symmetric(horizontal: _width * 0.05),
+                margin: EdgeInsets.symmetric(horizontal: _width * 0.08),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
               "회원가입",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
             ),
             Form(
                 //
@@ -103,7 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                             var result = json.decode(res);
 
-                            print("result : ${result.toString()}");
+                            // print("result : ${result.toString()}");
                             if (result["message"] != null &&
                                 !widget.isSocialLogin) {
                               showDialog(

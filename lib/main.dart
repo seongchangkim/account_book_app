@@ -4,6 +4,7 @@ import 'package:account_book_app/page/user/login_page.dart';
 import 'package:account_book_app/page/user/profile_page.dart';
 import 'package:account_book_app/page/user/sign_up_page.dart';
 import 'package:account_book_app/splash/splash_page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'; 
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -53,6 +54,14 @@ class _MyAppState extends State<MyApp> {
         return MaterialPageRoute(
             settings: settings, builder: (context) => routes[getMoveRouters]!);
       },
+      localizationsDelegates: const [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [
+        Locale('ko', 'KR')
+      ],
     );
   }
 }

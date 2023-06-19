@@ -31,6 +31,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   # 전화번호 포멧 설정 및 유효성 검사  
   mask_text_input_formatter: ^2.4.0
@@ -47,8 +49,8 @@ dependencies:
   # 카카오 로그인
   kakao_flutter_sdk: ^1.4.3
   
-  flutter_web_auth: ^0.5.0
   firebase_auth: ^4.6.1
+  # 파이어베이스 연동
   firebase_core: ^2.13.0
   firebase_storage: ^11.2.2
 
@@ -61,7 +63,7 @@ dependencies:
   skeletons: ^0.0.3
 
   # 날짜 형식 변환
-  intl: ^0.18.1
+  intl: ^0.17.0
 
   # 새로고침 기능
   pull_to_refresh: ^2.0.0
@@ -93,6 +95,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:

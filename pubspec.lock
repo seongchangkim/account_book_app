@@ -230,6 +230,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -284,13 +289,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_auth:
-    dependency: "direct main"
-    description:
-      name: flutter_web_auth
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -386,7 +384,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.1"
+    version: "0.17.0"
   js:
     dependency: transitive
     description:

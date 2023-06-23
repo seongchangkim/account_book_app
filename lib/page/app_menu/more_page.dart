@@ -16,8 +16,7 @@ class MorePage extends StatefulWidget {
 class _MorePageState extends State<MorePage>
     with AutomaticKeepAliveClientMixin {
   final _userController = Get.put(UserStore());
-  final _menuController = Get.put(AppMenuStore());
-
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

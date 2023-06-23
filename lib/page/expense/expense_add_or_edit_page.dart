@@ -214,20 +214,6 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                             }
                           },
                           child: const ExpenseInputBtn(color: Colors.blueAccent, btnText: "추가", margin: EdgeInsets.only(top: 20))
-                          // Container(
-                          //   height: 50,
-                          //   margin: const EdgeInsets.only(top: 20),
-                          //   decoration: const BoxDecoration(
-                          //       borderRadius:
-                          //           BorderRadius.all(Radius.circular(10)),
-                          //       color: Colors.blueAccent),
-                          //   child: const Center(
-                          //     child: Text(
-                          //       "추가",
-                          //       style: TextStyle(color: Colors.white),
-                          //     ),
-                          //   ),
-                          // ),
                         )
                       else if (widget.isEditing)
                         Row(
@@ -278,20 +264,6 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                     }
                                   },
                                   child: const ExpenseInputBtn(color: Colors.blueAccent, btnText: "수정", margin: EdgeInsets.only(top: 20, right: 5),)
-                                  // Container(
-                                  //   height: 50,
-                                  //   margin: const EdgeInsets.only(top: 20, right: 5),
-                                  //   decoration: const BoxDecoration(
-                                  //       borderRadius: BorderRadius.all(
-                                  //           Radius.circular(10)),
-                                  //       color: Colors.blueAccent),
-                                  //   child: const Center(
-                                  //     child: Text(
-                                  //       "수정",
-                                  //       style: TextStyle(color: Colors.white),
-                                  //     ),
-                                  //   ),
-                                  // ),
                                 )),
                             Expanded(
                                 flex: 1,
@@ -319,20 +291,6 @@ class _ExpenseAddOrEditPageState extends State<ExpenseAddOrEditPage> {
                                     }
                                   },
                                   child: const ExpenseInputBtn(color: Colors.redAccent, btnText: "삭제", margin: EdgeInsets.only(top: 20, left: 5))
-                                  // Container(
-                                  //   height: 50,
-                                  //   margin: const EdgeInsets.only(top: 20, left: 5),
-                                  //   decoration: const BoxDecoration(
-                                  //       borderRadius: BorderRadius.all(
-                                  //           Radius.circular(10)),
-                                  //       color: Colors.redAccent),
-                                  //   child: const Center(
-                                  //     child: Text(
-                                  //       "삭제",
-                                  //       style: TextStyle(color: Colors.white),
-                                  //     ),
-                                  //   ),
-                                  // ),
                                 )),
                           ],
                         )

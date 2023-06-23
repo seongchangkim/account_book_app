@@ -30,7 +30,7 @@ Future<dynamic> addExpense(String userId, String date, String content,
 
 // 날짜별 지출 또는 수입 항목 목록 불러오기
 Future<dynamic> getExpenseListByDate(
-    String userId, String date, String? lastExpenseId) async {
+  String userId, String date, String? lastExpenseId) async {
   var params = {"userId": userId, "date": date, "lastExpenseId": lastExpenseId};
 
   Uri url = Uri.parse("${BASE_URL}/api/expense/list");
@@ -46,22 +46,17 @@ Future<dynamic> getExpenseListByDate(
 
 // 지출 또는 수입 항목 상세보기
 Future<dynamic> getExpenseById(String expenseId) async {
-  print("expense : $expenseId");
-  // print("date : $date");
 
   Uri url = Uri.parse("${BASE_URL}/api/expense/$expenseId");
   var res = await http.get(url, headers: {
     "Content-Type": "application/json",
   });
 
-  print("res : ${res.body}");
   return json.decode(res.body);
 }
 
 // 지출 또는 수입 항목 수정
 Future<dynamic> editExpense(String expenseId, String date, String content, String expense, String status, String category) async {
-  // print("expense : $expenseId");
-  // print("date : $date");
 
   var params = {
     "date": date,
@@ -85,8 +80,6 @@ Future<dynamic> editExpense(String expenseId, String date, String content, Strin
 
 // 지출 또는 수입 항목 삭제
 Future<dynamic> deleteExpense(String expenseId) async {
-  // print("expense : $expenseId");
-  // print("date : $date");
 
   Uri url = Uri.parse("${BASE_URL}/api/expense/$expenseId");
   var res = await http.delete(url, 

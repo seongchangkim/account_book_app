@@ -37,9 +37,9 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
           child: SingleChildScrollView(
               child: Container(
-                width: _width,
-                height: _height,
-                margin: EdgeInsets.symmetric(horizontal: _width * 0.08),
+        width: _width,
+        height: _height,
+        margin: EdgeInsets.symmetric(horizontal: _width * 0.08),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -133,6 +133,7 @@ class _LoginPageState extends State<LoginPage> {
 
                             final profileInfo = json.decode(response.body);
 
+                            print("profileInfo : $profileInfo");
                             var isExistRes = await isExistSocialUser(
                                 profileInfo["kakao_account"]["email"],
                                 profileInfo["kakao_account"]["profile"]
@@ -157,7 +158,6 @@ class _LoginPageState extends State<LoginPage> {
                                       ["profile"]["nickname"]
                                 }) as bool;
 
-                            print("token : ${token["access_token"]}");
                             if (isSucess) {
                               await kakaoLogin(token["access_token"],
                                       userController.userId)
@@ -208,7 +208,6 @@ class _LoginPageState extends State<LoginPage> {
   // 로그인 및 소셜 로그인 공통 처리 메소드(토큰 유효성 검사 및 홈 화면으로 리다이렉트)
   Future<void> successLoginRedirectPage(String token) async {
     await checkAuth(token).then((isAuth) {
-      // print("isAuth : $isAuth");
       if (isAuth) {
         menuController.setAppMenuPage(0);
 

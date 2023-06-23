@@ -19,6 +19,9 @@ class ExpenseCategoryBox extends StatefulWidget {
 class _ExpenseCategoryBoxState extends State<ExpenseCategoryBox> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double width = size.width;
+    double height = size.height;
 
     return GestureDetector(
       onTap: () {
@@ -27,8 +30,8 @@ class _ExpenseCategoryBoxState extends State<ExpenseCategoryBox> {
         print("select : ${widget.currentSelectedCategory}");
       },
       child: Container(
-        width: 80,
-        height: 80,
+        width: width * 0.2,
+        height: height * 0.11,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(10)),

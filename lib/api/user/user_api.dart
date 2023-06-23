@@ -106,6 +106,9 @@ Future<void> kakaoLogin(String oauthToken, String id) async {
       encoding: Encoding.getByName('utf-8'),
       body: json.encode(param));
 
+  await storage.write(key: "x_auth", value: oauthToken);
+  await storage.write(key: "userId", value: id);
+
   _controller.setToken(oauthToken);
 }
 

@@ -58,7 +58,6 @@ class ErrorDialog extends StatelessWidget {
                 )
               ),
             )
-            
           ],
         ),
       )

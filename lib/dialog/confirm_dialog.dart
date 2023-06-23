@@ -27,7 +27,6 @@ class ConfirmDialog extends StatelessWidget {
             children: [
               Container(
                   width: width,
-                  // decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: Colors.black38))),
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   height: 40,
                   child: Center(
@@ -47,7 +46,6 @@ class ConfirmDialog extends StatelessWidget {
                   )),
               GestureDetector(
                 onTap: () {
-                  // print("click");
                   func();
                 },
                 child: Container(

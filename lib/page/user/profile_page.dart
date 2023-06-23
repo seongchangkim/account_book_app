@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:account_book_app/api/user/user_api.dart';
@@ -78,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   GestureDetector(
                     onTap: () async {
                       XFile? file = await _picker.pickImage(
-                          source: ImageSource.gallery, imageQuality: 100);
+                          source: ImageSource.gallery);
 
                       if (file == null) {
                         return;

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:account_book_app/dialog/confirm_dialog.dart';
 import 'package:account_book_app/widget/user/user_input_btn.dart';
@@ -103,7 +102,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
                             var result = json.decode(res);
 
-                            // print("result : ${result.toString()}");
                             if (result["message"] != null &&
                                 !widget.isSocialLogin) {
                               showDialog(

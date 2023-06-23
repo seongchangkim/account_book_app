@@ -17,13 +17,17 @@
 ### 1. 스플래시 화면
 <img src="https://github.com/seongchangkim/account_book_app/assets/74657556/32f54b1c-086e-49a4-92c0-bd0d07eccdf1" width="250" height="500">
 <br/>
-스플래시 화면에서 이 앱 안에 사용자 정보를 들어있는 Android는 KeyStore를, IOS는 KeyChain를 통해 내부 저장소를 저장합니다. 그리고 그것을 통해 로그인을 유지하는 방식으로 했습니다. 그리고 회원 인증 API를 호출하여 사용자 정보를 통해 유효하고 존재하는지 검사하고 그 사용자 정보가 유효하고 존재하면 홈 화면으로 이동하고 그렇지 않으면 로그인 페이지로 이동 
+스플래시 화면에서 이 앱 안에 사용자 정보를 들어있는 Android는 KeyStore를, IOS는 KeyChain를 통해 내부 저장소를 저장합니다. 그리고 그것을 통해 로그인을 유지하는 방식으로 했습니다. 그리고 회원 인증 API를 호출하여 사용자 정보를 통해 유효하고 존재하는지 검사하고 그 사용자 정보가 유효하고 존재하면 홈 화면으로 이동하고 그렇지 않으면 로그인 페이지로 이동 합니다.
 
 ### 2. 회원가입
-https://user-images.githubusercontent.com/74657556/220310054-8c7d65e6-b5d5-4905-b309-c42a90796879.mp4
+![user-register-vaildate-ezgif com-video-to-gif](https://github.com/seongchangkim/account_book_app/assets/74657556/77d77fe9-045e-4fec-9659-a4db1c68ba19)
+<p align="center">회원가입 유효성 검사</p>
+
+![user-register-ezgif com-video-to-gif](https://github.com/seongchangkim/account_book_app/assets/74657556/de7bded3-dbb4-4256-a7d8-74718a860785)
+<p align="center">회원가입 성공</p>
 
 <br/>
-- 로그인 페이지에서 회원가입 부분을 누르면 회원가입 페이지가 뜨는데 회원정보를 입력하여 회원가입 버튼을 클릭하면 회원가입 API를 POST방식으로 호출하여 입력한 회원정보를 들고 request해서 작동함. 회원가입이 성공하면 해당 회원이 생성이 되면서 회원가입 완료 알림창이 뜨고 확인 버튼을 누르면 로그인 페이지로 이동.(유효성 검사 기능도 있음.)
+- 로그인 페이지에서 회원가입 부분을 누르면 회원가입 페이지가 뜨는데 회원정보를 입력하여 회원가입 버튼을 클릭하면 회원가입 API를 POST방식으로 호출하여 입력한 회원정보를 들고 request해서 서버에서 response값을 받아서 회원가입이 성공하면 해당 회원이 생성되면서 회원가입 완료 알림창이 뜨고 확인 버튼을 누르면 로그인 페이지로 이동합니다.(유효성 검사 기능도 있습니다.)
 
 
 ### 3. 로그인

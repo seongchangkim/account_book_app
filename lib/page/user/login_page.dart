@@ -113,11 +113,11 @@ class _LoginPageState extends State<LoginPage> {
                         )),
                     GestureDetector(
                         onTap: () async {
-                          OAuthToken oauthToken = await isKakaoTalkInstalled()
+                          try {
+                            OAuthToken oauthToken = await isKakaoTalkInstalled()
                               ? await UserApi.instance.loginWithKakaoTalk()
                               : await UserApi.instance.loginWithKakaoAccount();
 
-                          try {
                             var token = oauthToken.toJson();
 
                             final url =

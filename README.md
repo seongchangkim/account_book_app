@@ -1,4 +1,4 @@
-![accountbook-ezgif com-video-to-gif](https://github.com/seongchangkim/account_book_app/assets/74657556/3758f777-a0b6-4de2-9711-d8129354f3e7)# account_book_app
+# account_book_app
 <img src="https://github.com/seongchangkim/account_book_app/assets/74657556/8a28f259-dcfb-41c3-ad5f-ebfefa54ce0c" width="250" height="500">
 
 회원 기능(로그인, 로그아웃, 회원가입, 카카오 소셜로그인)이 있고 회원으로 로그인하여 가계부를 생성할 수 뿐만 아니라 가계부 목록을 조회할 수 있고 수정 및 삭제가능한 앱 애플리케이션입니다. 

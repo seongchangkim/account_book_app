@@ -3,6 +3,9 @@
 
 회원 기능(로그인, 로그아웃, 회원가입, 카카오 소셜로그인)이 있고 회원으로 로그인하여 가계부를 생성할 수 뿐만 아니라 가계부 목록을 조회할 수 있고 수정 및 삭제가능한 앱 애플리케이션입니다. 
 <br/>
+
+● Android : [app-release.apk.zip](https://github.com/seongchangkim/account_book_app/files/12365272/app-release.apk.zip)<br/>
+● IOS : [Runner.zip](https://github.com/seongchangkim/account_book_app/files/12365274/Runner.zip)<br/>
 ● 제작기간 : 2023.5.11~2023.06.19(1달, 주말 제외)(1인 프로젝트)
 
 ### 개발 환경

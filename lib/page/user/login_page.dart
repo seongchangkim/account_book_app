@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
 
                             final profileInfo = json.decode(response.body);
 
-                            print("profileInfo : $profileInfo");
+                            // print("profileInfo : $profileInfo");
                             var isExistRes = await isExistSocialUser(
                                 profileInfo["kakao_account"]["email"],
                                 profileInfo["kakao_account"]["profile"]

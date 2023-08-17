@@ -80,8 +80,6 @@ Future<bool> checkAuth(String token) async {
 
   var data = json.decode(res.body);
 
-  log("data : ${data}");
-
   _controller.setUserInfo(
       data["id"].toString(),
       data["token"] ?? "",

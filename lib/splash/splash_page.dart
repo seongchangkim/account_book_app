@@ -1,4 +1,5 @@
 import 'package:account_book_app/api/user/user_api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:account_book_app/global/user_global.dart';
 
@@ -24,11 +25,13 @@ class _SplashPageState extends State<SplashPage> {
     // 로그인 체크
     bool isAuth = await checkAuth(token);
 
-    if (isAuth) {
-      Navigator.pushNamedAndRemoveUntil(context, "/appMenu", (route) => false);
-    } else {
-      Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
-    }
+    Future.delayed(const Duration(seconds: kReleaseMode ? 1 : 0), () => {
+      if (isAuth) {
+        Navigator.pushNamedAndRemoveUntil(context, "/appMenu", (route) => false)
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false)
+      }
+    }); 
   }
 
   @override

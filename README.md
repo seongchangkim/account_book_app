@@ -16,6 +16,11 @@
 #### 2). IDE
 > 1. Visual Studio Code
 
+## 앱에서 적용했던 주요 기술
+● Getx 상태관리 라이브러리를 활용하여 상태관리를 적용했습니다. <br/>
+● 위젯 단위로 컴포넌트화 작업을 통해 쉽게 유지보수할 수 있도록 구현했습니다. <br/>
+● 불필요한 위젯 생성 방지 및 불필요한 리렌더링 방지 등을 통해 Flutter 앱 최적화 작업했습니다.
+
 ## 주요 기능 및 페이지
 ### 1. 스플래시 화면
 <img src="https://github.com/seongchangkim/account_book_app/assets/74657556/32f54b1c-086e-49a4-92c0-bd0d07eccdf1" width="250" height="500">
